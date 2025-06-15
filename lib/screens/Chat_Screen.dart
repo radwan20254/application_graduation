@@ -4,7 +4,7 @@ import 'package:diagnosify_app/features/chat_services/manager/cubit/chat_bot_cub
 import 'package:diagnosify_app/screens/Login_Screen.dart';
 import 'package:diagnosify_app/screens/ProfileForm.dart';
 import 'package:diagnosify_app/widgets/chathistory.dart';
-import 'package:diagnosify_app/widgets/map.dart';
+import 'package:diagnosify_app/map/widgets/custom_google_map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart'; // For image selection
@@ -142,7 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatBotCubit, ChatBotState>(
-      listener: (context, state) { 
+      listener: (context, state) {
         if (state is ChatBotLoading) {
           setState(() {
             _isLoading = true; // Show loading spinner
@@ -361,7 +361,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OpenStreetMapScreen(),
+                            builder: (context) => CustomGoogleMap(),
                           ),
                         );
                       },

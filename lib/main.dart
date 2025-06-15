@@ -8,11 +8,14 @@ import 'package:diagnosify_app/features/chat_services/manager/cubit/chat_bot_cub
 import 'package:diagnosify_app/screens/Splash_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'map/widgets/custom_google_map.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferenceSingleton.init();
-
+  await dotenv.load();
   runApp(Diagnosify_app());
 }
 
@@ -42,7 +45,7 @@ class _Diagnosify_appState extends State<Diagnosify_app> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashScreen(),
+        home: CustomGoogleMap(),
       ),
     );
   }

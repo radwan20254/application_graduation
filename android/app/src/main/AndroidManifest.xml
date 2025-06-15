@@ -3,7 +3,8 @@
         android:label="diagnosify_app"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-        
+        <meta-data android:name="com.google.android.geo.API_KEY"    
+                 android:value="AIzaSyDPeO4jXwx9R3Ipdf-EzuYaEvmdajpkSdE"/>
 
         <activity
             android:name=".MainActivity"
