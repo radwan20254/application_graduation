@@ -10,7 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart'; // For image selection
 import 'dart:io';
 
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart'; // For handling File objects
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:url_launcher/url_launcher.dart'; // For handling File objects
 
 class ChatMessage extends StatelessWidget {
   final String text;
@@ -142,7 +143,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ChatBotCubit, ChatBotState>(
-      listener: (context, state) { 
+      listener: (context, state) {
         if (state is ChatBotLoading) {
           setState(() {
             _isLoading = true; // Show loading spinner
@@ -358,12 +359,13 @@ class _ChatScreenState extends State<ChatScreen> {
                     IconButton(
                       icon: const Icon(Icons.location_on_outlined),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OpenStreetMapScreen(),
-                          ),
-                        );
+                        _launchMap(); // Launch the map URL
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => OpenStreetMapScreen(),
+                        //   ),
+                        // );
                       },
                     ),
                   ],
@@ -374,5 +376,14 @@ class _ChatScreenState extends State<ChatScreen> {
         );
       },
     );
+  }
+}
+
+Future<void> _launchMap() async {
+  final Uri url = Uri.parse(
+    'https://www.google.com/maps/search/Hospitals+and+clinics/@31.0095244,31.3760457,13z',
+  );
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw 'Could not launch $url';
   }
 }
