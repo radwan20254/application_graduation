@@ -39,14 +39,24 @@ dependencies:
   dio: ^5.8.0+1
   cloud_functions: ^5.0.3
   flutter_bloc: ^9.1.0
+  modal_progress_hud_nsn: ^0.5.1
+  flutter_animate: ^4.5.2
   # google_maps_flutter: ^2.5.3
   # geolocator: ^11.0.0
   # http: ^1.2.1
 
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.14.3"
   flutter_test:
     sdk: flutter
+  
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/IMG-20250226-WA0006.jpg"
+  min_sdk_android: 21
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

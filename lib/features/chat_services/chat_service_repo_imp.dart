@@ -27,6 +27,10 @@ class ChatServiceRepoImp implements ChatServiceRepo {
     } catch (e) {
       if (e is DioException) {
         log('DioException: ${e.message}');
+        print('Dio error type: ${e.type}');
+        print('Dio error message: ${e.message}');
+        print('Dio response: ${e.response}');
+        print('Dio request options: ${e.requestOptions}');
         return left({
           'error': e.response?.data['error'] ??
               e.message ??
