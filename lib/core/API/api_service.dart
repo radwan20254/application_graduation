@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:diagnosify_app/core/constant.dart';
+import 'package:diagnosify_app/core/services/sigletonesharedperference.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -23,13 +25,24 @@ class ApiService {
 
   Future<Map<String, dynamic>> Get({required String endpoint}) async {
     try {
+      
+      final String? barrertoken =
+          await SharedPreferenceSingleton.getString(token);
+
+      if (barrertoken == null || barrertoken.isEmpty) {
+        throw DioException(
+          requestOptions: RequestOptions(path: endpoint),
+          error: 'Authentication token missing',
+        );
+      }
+
       final response = await dio.get(
         endpoint,
         options: Options(
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Bearer ',
+            'Authorization': 'Bearer $barrertoken',
           },
         ),
       );

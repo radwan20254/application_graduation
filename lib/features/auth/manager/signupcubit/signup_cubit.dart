@@ -18,11 +18,10 @@ class SignupCubit extends Cubit<SignupState> {
       required String phoneNumber,
       required String email,
       required String password,
-      required String password_confirmation}
-  ) async {
+      required String password_confirmation}) async {
+
     emit(SignupLoading());
-    var response = await AuthRepoImplementation(apiService: apiService)
-        .signUp(
+    var response = await AuthRepoImplementation(apiService: apiService).signUp(
       FName: FName,
       LName: LName,
       nationalid: nationalid,

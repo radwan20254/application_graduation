@@ -3,7 +3,6 @@ import 'package:diagnosify_app/core/services/sigletonesharedperference.dart';
 import 'package:diagnosify_app/features/auth/data/model/login_error_model.dart';
 import 'package:diagnosify_app/features/auth/manager/logincubit/login_cubit.dart';
 import 'package:diagnosify_app/screens/ForgotPassword.dart';
-import 'package:diagnosify_app/screens/HealthQuestionnaireScreen.dart';
 import 'package:diagnosify_app/screens/SignUp_Screen.dart';
 import 'package:diagnosify_app/screens/home_view.dart';
 import 'package:flutter/material.dart';
