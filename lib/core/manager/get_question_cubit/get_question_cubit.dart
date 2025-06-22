@@ -2,8 +2,8 @@ import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:diagnosify_app/core/API/api_service.dart';
-import 'package:diagnosify_app/features/question_services/model/question_model.dart';
-import 'package:diagnosify_app/features/question_services/question_repo_implementaion.dart';
+import 'package:diagnosify_app/core/services/question_services/model/question_model.dart';
+import 'package:diagnosify_app/core/services/question_services/question_repo_implementaion.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 

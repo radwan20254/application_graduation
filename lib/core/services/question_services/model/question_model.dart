@@ -15,11 +15,11 @@ class AnswerModel {
 
   factory AnswerModel.fromJson(Map<String, dynamic> json) {
     return AnswerModel(
-      id: json['id'],
-      questionId: json['question_id'],
-      answer: json['answer'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
+      id: json['id'] ?? 0,
+      questionId: json['question_id'] ?? 0,
+      answer: json['answer'] ?? '',
+      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
     );
   }
 
@@ -48,13 +48,16 @@ class QuestionModel {
   });
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) {
+    final List<AnswerModel> answersList = (json['answers'] as List<dynamic>?)
+            ?.map((e) => AnswerModel.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        [];
+
     return QuestionModel(
-      id: json['id'],
-      name: json['name'],
-      type: json['type'],
-      answers: (json['answers'] as List)
-          .map((answerJson) => AnswerModel.fromJson(answerJson))
-          .toList(),
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      type: json['type'] ?? '',
+      answers: answersList,
     );
   }
 
@@ -66,4 +69,8 @@ class QuestionModel {
       'answers': answers.map((a) => a.toJson()).toList(),
     };
   }
+}
+
+List<QuestionModel> questionModelListFromJson(List<Map<String, dynamic>> data) {
+  return data.map((item) => QuestionModel.fromJson(item)).toList();
 }

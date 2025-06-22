@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:diagnosify_app/core/API/api_service.dart';
 import 'package:diagnosify_app/core/API/backend_endpoint.dart';
-import 'package:diagnosify_app/features/question_services/model/question_model.dart';
-import 'package:diagnosify_app/features/question_services/question_repo.dart';
+import 'package:diagnosify_app/core/services/question_services/model/question_model.dart';
+import 'package:diagnosify_app/core/services/question_services/question_repo.dart';
 import 'package:dio/dio.dart';
 
 class QuestionRepoImplementaion extends QuestionRepo {

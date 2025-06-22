@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:diagnosify_app/core/manager/get_question_cubit/get_question_cubit.dart';
 import 'package:diagnosify_app/core/services/sigletonesharedperference.dart';
 import 'package:diagnosify_app/features/auth/manager/logincubit/login_cubit.dart';
 import 'package:diagnosify_app/features/auth/manager/signupcubit/signup_cubit.dart';
@@ -28,6 +29,9 @@ class _Diagnosify_appState extends State<Diagnosify_app> {
       providers: [
         BlocProvider<ChatBotCubit>(
           create: (context) => ChatBotCubit(),
+        ),
+        BlocProvider<GetQuestionCubit>(
+          create: (context) => GetQuestionCubit(),
         ),
         BlocProvider<SignupCubit>(
           create: (context) => SignupCubit(),

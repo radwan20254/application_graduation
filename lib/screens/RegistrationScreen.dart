@@ -8,6 +8,8 @@ class RegistrationScreen2 extends StatefulWidget {
 }
 
 class _RegistrationScreen2State extends State<RegistrationScreen2> {
+  final formKey = GlobalKey<FormState>();
+
   bool _isFirstTimeRegistration = true; // Simulate first-time registration
   final _diseaseController = TextEditingController();
   final _diagnosisController = TextEditingController();
@@ -46,98 +48,115 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              'assets/IMG-20250226-WA0009-removebg-preview.png',
-            ),
-            Text(
-              'please answer the following questions',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'What disease do you suffer from?',
-              style: TextStyle(fontSize: 16),
-            ),
-            TextFormField(
-              controller: _diseaseController,
-              decoration: InputDecoration(
-                hintText: 'Answer',
-                border: OutlineInputBorder(),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/IMG-20250226-WA0009-removebg-preview.png',
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'When were you diagnosed with this disease?',
-              style: TextStyle(fontSize: 16),
-            ),
-            TextFormField(
-              controller: _diagnosisController,
-              decoration: InputDecoration(
-                hintText: 'Answer',
-                border: OutlineInputBorder(),
+              Text(
+                'please answer the following questions',
+                style: TextStyle(fontSize: 16),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'What medications do you take?',
-              style: TextStyle(fontSize: 16),
-            ),
-            TextFormField(
-              controller: _medicationsController,
-              decoration: InputDecoration(
-                hintText: 'Answer',
-                border: OutlineInputBorder(),
+              SizedBox(height: 20),
+              Text(
+                'What disease do you suffer from?',
+                style: TextStyle(fontSize: 16),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'What are the most common symptoms that affect you?',
-              style: TextStyle(fontSize: 16),
-            ),
-            TextFormField(
-              controller: _symptomsController,
-              decoration: InputDecoration(
-                hintText: 'Answer',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Do you have a contingency plan in case further fatigue occurs?',
-              style: TextStyle(fontSize: 16),
-            ),
-            TextFormField(
-              controller: _contingencyPlanController,
-              decoration: InputDecoration(
-                hintText: 'Answer',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeView()),
-                  );
-                  setState(() {
-                    _isFirstTimeRegistration =
-                        false; // Mark registration as complete
-                  });
-                },
-                child: Text('Next',
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 38, vertical: 12),
-                  backgroundColor: Color(0xff048497),
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter your disease' : null,
+                controller: _diseaseController,
+                decoration: InputDecoration(
+                  hintText: 'Answer',
+                  border: OutlineInputBorder(),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              Text(
+                'When were you diagnosed with this disease?',
+                style: TextStyle(fontSize: 16),
+              ),
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter your diagnosis date' : null,
+                controller: _diagnosisController,
+                decoration: InputDecoration(
+                  hintText: 'Answer',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'What medications do you take?',
+                style: TextStyle(fontSize: 16),
+              ),
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter your medications' : null,
+                controller: _medicationsController,
+                decoration: InputDecoration(
+                  hintText: 'Answer',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'What are the most common symptoms that affect you?',
+                style: TextStyle(fontSize: 16),
+              ),
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter your symptoms' : null,
+                controller: _symptomsController,
+                decoration: InputDecoration(
+                  hintText: 'Answer',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Do you have a contingency plan in case further fatigue occurs?',
+                style: TextStyle(fontSize: 16),
+              ),
+              TextFormField(
+                validator: (value) => value!.isEmpty
+                    ? 'Please enter your contingency plan'
+                    : null,
+                controller: _contingencyPlanController,
+                decoration: InputDecoration(
+                  hintText: 'Answer',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      _submitForm();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeView()),
+                      );
+                      setState(() {
+                        _isFirstTimeRegistration =
+                            false; // Mark registration as complete
+                      });
+                    }
+                  },
+                  child: Text('Next',
+                      style: TextStyle(fontSize: 16, color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 38, vertical: 12),
+                    backgroundColor: Color(0xff048497),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

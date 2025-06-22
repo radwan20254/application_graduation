@@ -20,17 +20,31 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  bool _isFirstTimeRegistration = true; // Simulate first-time registration
+  bool _isFirstTimeRegistration = true;
   String? _chronicDisease;
   String? _smoker;
   String? _regularMedication;
 
   void _submitForm() {
-    // Here you can add the logic to process the form data
+    // You can also send the form data to backend here if needed
     print('Chronic Disease: $_chronicDisease');
     print('Smoker: $_smoker');
     print('Regular Medication: $_regularMedication');
-    // You can also navigate to another screen or show a success message
+  }
+
+  bool _validateAnswers() {
+    if (_chronicDisease == null ||
+        _smoker == null ||
+        _regularMedication == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Please answer all questions before proceeding."),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -55,113 +69,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/IMG-20250226-WA0009-removebg-preview.png',
-            ),
+            Image.asset('assets/IMG-20250226-WA0009-removebg-preview.png'),
             Text(
               'Good Morning, Lara',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            Text(
-              'Do you suffer from a chronic disease?',
-              style: TextStyle(fontSize: 16),
+            _buildQuestion(
+              question: 'Do you suffer from a chronic disease?',
+              groupValue: _chronicDisease,
+              onChanged: (val) => setState(() => _chronicDisease = val),
             ),
-            Row(
-              children: [
-                Radio<String>(
-                  value: 'Yes',
-                  groupValue: _chronicDisease,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _chronicDisease = value;
-                    });
-                  },
-                ),
-                Text('Yes'),
-                Radio<String>(
-                  value: 'No',
-                  groupValue: _chronicDisease,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _chronicDisease = value;
-                    });
-                  },
-                ),
-                Text('No'),
-              ],
+            _buildQuestion(
+              question: 'Are you a smoker?',
+              groupValue: _smoker,
+              onChanged: (val) => setState(() => _smoker = val),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Are you a smoker?',
-              style: TextStyle(fontSize: 16),
-            ),
-            Row(
-              children: [
-                Radio<String>(
-                  value: 'Yes',
-                  groupValue: _smoker,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _smoker = value;
-                    });
-                  },
-                ),
-                Text('Yes'),
-                Radio<String>(
-                  value: 'No',
-                  groupValue: _smoker,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _smoker = value;
-                    });
-                  },
-                ),
-                Text('No'),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Is there any medication that you take regularly?',
-              style: TextStyle(fontSize: 16),
-            ),
-            Row(
-              children: [
-                Radio<String>(
-                  value: 'Yes',
-                  groupValue: _regularMedication,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _regularMedication = value;
-                    });
-                  },
-                ),
-                Text('Yes'),
-                Radio<String>(
-                  value: 'No',
-                  groupValue: _regularMedication,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _regularMedication = value;
-                    });
-                  },
-                ),
-                Text('No'),
-              ],
+            _buildQuestion(
+              question: 'Is there any medication that you take regularly?',
+              groupValue: _regularMedication,
+              onChanged: (val) => setState(() => _regularMedication = val),
             ),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RegistrationScreen2()),
-                  );
-                  setState(() {
-                    _isFirstTimeRegistration =
-                        false; // Mark registration as complete
-                  });
+                  if (_validateAnswers()) {
+                    _submitForm();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationScreen2()),
+                    );
+                    setState(() {
+                      _isFirstTimeRegistration = false;
+                    });
+                  }
                 },
                 child: Text('Next',
                     style: TextStyle(fontSize: 16, color: Colors.white)),
@@ -174,6 +117,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildQuestion({
+    required String question,
+    required String? groupValue,
+    required ValueChanged<String?> onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          question,
+          style: TextStyle(fontSize: 16),
+        ),
+        Row(
+          children: [
+            Radio<String>(
+              value: 'Yes',
+              groupValue: groupValue,
+              onChanged: onChanged,
+            ),
+            Text('Yes'),
+            Radio<String>(
+              value: 'No',
+              groupValue: groupValue,
+              onChanged: onChanged,
+            ),
+            Text('No'),
+          ],
+        ),
+        SizedBox(height: 10),
+      ],
     );
   }
 }
